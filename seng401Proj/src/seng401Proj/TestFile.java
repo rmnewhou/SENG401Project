@@ -6,7 +6,8 @@ package seng401Proj;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam; 
-import javax.ws.rs.Produces; 
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 import org.json.JSONException; 
 import org.json.JSONObject;
@@ -66,5 +67,20 @@ public class TestFile {
 		jsonObject.put("Attribution", att);
 		return Response.status(200).entity(response.getBody().toString()).build();
 	}
+	
+public Response callAuroraAPI(@QueryParam("type") String type) throws JSONException, UnirestException  {
+		
+		JSONObject jsonObject = new JSONObject();
+		 HttpResponse<JsonNode> response =
+				 Unirest.get("http://api.auroras.live/v1/?type=ace&data=kp")
+				 .header("cookie", "PHPSESSID=MW2MMg7reEHx0vQPXaKen0")
+				 .asJson();
+		 jsonObject = response.getBody().getObject();
+		 String att = "Powered by Auroras.live";
+		 jsonObject.put("Attribution", att);
+		 return Response.status(200).entity(response.getBody().toString()).build();
+	
+
+}
 
 }
